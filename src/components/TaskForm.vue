@@ -1,5 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import {ref} from 'vue'
+import {useTasksStore} from '../store/tasks';
+
+console.log(useTasksStore);
 </script>
 
 <template>
