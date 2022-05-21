@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <div class="flex">
+    <div class="flex -mx-4">
         <div class="px-4 w-1/3">
             <div class="flex bg-white px-4 py-6 rounded-lg">
                 <div class="w-1/3 flex justify-center">
