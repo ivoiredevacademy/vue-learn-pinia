@@ -9,6 +9,7 @@ export default new class Storage {
 
     fetchAll() {
         const serializedTasks = this.storage.getItem('tasks');
+        console.log(serializedTasks);
         return JSON.parse(serializedTasks);
     }
 
