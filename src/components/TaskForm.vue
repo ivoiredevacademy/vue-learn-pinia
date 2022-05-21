@@ -14,7 +14,7 @@ import { ref } from 'vue'
       " rows="6"></textarea>
     </div>
     <div class="mb-6">
-      <button class="bg-blue-700 text-white px-6 py-3 rounded font-semibold">Enregistrer</button>
+      <button class="bg-blue-700 text-white px-6 py-3 rounded ">Enregistrer</button>
     </div>
   </div>
   
