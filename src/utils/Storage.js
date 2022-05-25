@@ -4,38 +4,15 @@ export default new class Storage {
     }
 
     #save(tasks) {
-        this.setItem('tasks', tasks);
+        this.storage.setItem('tasks', JSON.stringify(tasks));
     }
 
     fetchAll() {
         const serializedTasks = this.storage.getItem('tasks');
-        console.log(serializedTasks);
         return JSON.parse(serializedTasks);
     }
 
-    create(newTask) {
-        const tasks = this.fetchAll();
-        const serializedTasks = JSON.stringify([...tasks, newTask]);
-        this.#save(serializedTasks);
+    performUpdate(data) {
+        this.#save(data);
     }
-
-    remove(taskId) {
-        const tasks = this.fetchAll();
-        const filteredTasks = tasks.filter((task) => task.id !== taskId);
-        this.#save(filteredTasks);
-    }
-
-    update(updatedTask) {
-        const tasks = this.fetchAll();
-        const updatedTasks = tasks.map((task) => {
-            if(updatedTask.id === task.id) {
-                return updatedTask;
-            }
-
-            return task;
-        })
-
-        this.#save(updatedTasks);
-    }
-
 }
