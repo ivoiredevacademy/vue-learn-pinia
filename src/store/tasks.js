@@ -7,23 +7,20 @@ export const useTasksStore = defineStore("tasks", {
   state() {
     return {
       tasks: tasks || [],
+      selectedTask: null
     };
   },
   actions: {
-    createNewTask(data) {
+    createTask(data) {
       this.tasks.push(data);
     },
-
-    updateTask() {
+    removeTask(taskId) {
+      this.tasks = this.tasks.filter((task) => task.id !== taskId);
       this.save();
     },
 
-    removeTask(taskId) {
-        this.tasks = tasks.filter((task) => task.id !== taskId);
-        this.save();
-    },
     save() {
-        Storage.performUpdate(this.tasks);
+      Storage.performUpdate(this.tasks);
     }
   },
   getters: {

@@ -8,19 +8,47 @@ const description = ref('');
 const taskStore = useTasksStore();
 
 function handleFormSubmit() {
-  taskStore.createNewTask({
-    id: uuid(), name: name.value, description: description.value,
-    completed: false
-  });
+  const task = {
+      id: taskStore.selectedTask ? taskStore.selectedTask.id : uuid(),
+      name: name.value,
+      description: description.value,
+      completed: false
+  };
 
-  name.value = "";
-  description.value = "";
+  if(taskStore.selectedTask) {
+      taskStore.selectedTask = null;
+  }
+
+  taskStore.createTask(task);
+
+  _clearForm();
 }
+
+function _clearForm() {
+    name.value = "";
+    description.value = "";
+}
+
+function cancelUpdate() {
+    taskStore.createTask(taskStore.selectedTask);
+    taskStore.selectedTask = null;
+}
+
+taskStore.$subscribe((mutation) => {
+    const selectedTask = mutation.events.target.selectedTask;
+
+    if(selectedTask) {
+        name.value = selectedTask.name;
+        description.value = selectedTask.description;
+    }
+});
 </script>
 
 <template>
   <form class="px-16 flex flex-col justify-center h-full" @submit.prevent="handleFormSubmit">
-    <h1 class="text-3xl font-semibold mb-10">Nouvelle tache </h1>
+    <h1 class="text-3xl font-semibold mb-10">
+        {{ taskStore.selectedTask ? "Modifier tache" : "Nouvelle tache" }}
+    </h1>
     <div class="mb-6">
       <input
         v-model="name"
@@ -37,7 +65,16 @@ function handleFormSubmit() {
       ></textarea>
     </div>
     <div class="mb-6">
-      <button class="bg-blue-700 text-white px-6 py-3 rounded " type="submit">Enregistrer</button>
+      <button class="bg-blue-100 text-blue-600 font-semibold px-6 py-3 rounded mr-2" type="submit">
+          {{ taskStore.selectedTask ? "Mettre à jour" : "Créer" }}
+      </button>
+      <button
+          v-if="taskStore.selectedTask"
+          class="bg-red-100 text-red-600 px-6 py-3 rounded font-semibold "
+          @click="cancelUpdate"
+      >
+        Annuler
+      </button>
     </div>
   </form>
 
