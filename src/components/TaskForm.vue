@@ -32,6 +32,8 @@ function _clearForm() {
 function cancelUpdate() {
     taskStore.createTask(taskStore.selectedTask);
     taskStore.selectedTask = null;
+
+    _clearForm();
 }
 
 taskStore.$subscribe((mutation) => {
